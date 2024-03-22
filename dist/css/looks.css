@@ -1,0 +1,119 @@
+/* Category Links */
+.category-links {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.category-links a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.category-links a:hover {
+    background-color: #ddd;
+}
+ /* search-bar */
+
+ .search-form {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#search-box {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 530px; /* Adjust the width as needed */
+}
+
+label[for="search-box"] {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Style the search icon */
+.fas.fa-search {
+    position:relative;
+    margin-top: 25px;
+    margin-left: 20px;
+    color: rgb(29, 29, 26);
+}
+
+
+.product-thumb {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin-bottom: 20px; /* Add margin-bottom to create space between rows */
+}
+
+.product-thumb:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.product-thumb img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.product-title a {
+    text-decoration: none;
+    color: #333;
+}
+
+.product-p {
+    color: #777;
+    margin-bottom: 15px;
+}
+
+.title-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.product-price {
+    color: #555;
+    font-weight: bold;
+}
+
+.product-button {
+    margin-top: 100px;
+}
+
+.btn-primary:hover {
+    background-color: #fff;
+}
+.product-details {
+    background-color: #90572b ;
+    color: #fff;
+}
+ .product-details a{
+    justify-content: center;
+    display: flex;
+ }

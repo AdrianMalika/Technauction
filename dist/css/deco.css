@@ -1,0 +1,205 @@
+.notification-dot {
+    width: 8px;
+    height: 8px;
+    background-color: red; /* Adjust color as needed */
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px; /* Adjust spacing as needed */
+}
+
+.icontext{
+    font-size: 22px;
+    color: #f0f8ff;
+  }
+
+  /* Custom CSS for dropdowns */
+.form-floating.select-group {
+    position: relative;
+}
+
+.form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+}
+
+.form-floating > .form-select:focus {
+    z-index: 2;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.form-floating > .form-select:required:invalid ~ label {
+    color: #ff5d5d;
+}
+
+.form-floating > .form-select:required:invalid:focus ~ label {
+    color: #ff5d5d;
+}
+
+.form-floating > .form-select:required:invalid ~ label::after {
+    content: ' *';
+}
+
+.form-floating > .form-select:focus ~ label,
+.form-floating > .form-select:not(:placeholder-shown) ~ label {
+    top: -0.25rem;
+    font-size: 0.75rem;
+}
+
+.img-fluid {
+    width: 300px;
+    height: 300px;
+}
+
+.product-thumb {
+    background: #FFFFFF;
+    transition: all 0.5s ease-out;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-thumb:hover .product-image {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add box-shadow to the product image on hover */
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: box-shadow 0.3s ease-in-out; /* Add transition for smooth effect */
+}
+
+.title-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.product-info h5 {
+    margin-bottom: 10px;
+}
+
+.product-title-link {
+    text-decoration: none;
+    color: #333;
+}
+
+.product-p {
+    color: #777;
+}
+
+.product-price {
+    color: #555;
+    font-weight: bold;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-button {
+    margin-top: 5px;
+}
+.wrong{
+    color: red;
+  }
+
+
+  .user-thumb {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.user-info {
+    text-align: center;
+}
+
+.user-name {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.user-email {
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.user-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%; /* For a circular image, adjust as needed */
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-delete:hover {
+    background-color: #c82333; /* Darker shade for hover effect */
+}
+.move_price{
+    text-align: right;
+}
+
+/* Custom List Group Styles */
+.custom-list-group {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .custom-list-item {
+    padding: 0.75rem 1.25rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .custom-product-title-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .custom-product-title-link:hover {
+    text-decoration: underline;
+  }
+  
+  .custom-text-muted {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  /* Additional Styles */
+  .d-flex {
+    display: flex;
+  }
+  
+  .justify-content-between {
+    justify-content: space-between;
+  }
+  
+  .align-items-center {
+    align-items: center;
+  }
