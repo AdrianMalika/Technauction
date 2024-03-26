@@ -95,10 +95,9 @@ $stmt->close();
                                 <img src="assets/images/users/user.png" alt="user" class="rounded-circle" width="31">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti-user me-1 ms-1"></i>My Profile</a></li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="SendEmail.php"><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
                                 <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
-                                <li><a class="dropdown-item" href=""><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
+                                <li><a class="dropdown-item" href="Admin_graphReport.php"><i class="fa fa-power-off me-1 ms-1"></i>Graph report</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -162,10 +161,11 @@ $stmt->close();
             </div>
 
 
-            <footer class="footer text-center">
-                All Rights Reserved by Nice admin. Designed and Developed by
-                <a href="https://www.wrappixel.com">WrapPixel</a>.
-            </footer>
+          <footer class="footer text-center">
+    All Rights Reserved by Technauction. Designed and Developed by
+    <a href="#">Technauction</a>.
+</footer>
+
         </div>
     </div>
 

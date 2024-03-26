@@ -2,12 +2,7 @@
     <div class="scroll-sidebar">
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account-network"></i>
-                        <span class="hide-menu">Profile</span>
-                    </a>
-                </li>
+
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_notifications.php" aria-expanded="false">
                         <i class="mdi mdi-bell-ring"></i>
@@ -25,7 +20,13 @@
                     <i class="mdi mdi-account-plus"></i>
                      <span class="hide-menu">Add Admin</span>
                     </a>
-                </li>               
+                </li>     
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_index.php" aria-expanded="false">
+                        <i class="mdi mdi-file-chart"></i> 
+                        <span class="hide-menu">Report</span>
+                    </a>
+                </li>
                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_deleteUser.php" aria-expanded="false">
                     <i class="mdi mdi-delete"></i>
