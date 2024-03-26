@@ -48,6 +48,12 @@ session_start();
                                         echo '</div>';
                                         unset($_SESSION['invalidCredentials']);
                                     }
+                                    if (isset($_SESSION['blockedUser']) && $_SESSION['blockedUser']) {
+                                        echo '<div class="password">';
+                                        echo "<p>You have been blocked</p>";
+                                        echo '</div>';
+                                        unset($_SESSION['blockedUser']);
+                                    }
                                     ?> 
                                     <div class="form-floating mb-4 p-0">
                                         <input type="email" name="User_Email" id="User_Email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required>

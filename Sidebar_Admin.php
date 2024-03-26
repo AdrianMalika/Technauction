@@ -30,7 +30,7 @@
                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_deleteUser.php" aria-expanded="false">
                     <i class="mdi mdi-delete"></i>
-                    <span class="hide-menu">Delete User</span>
+                    <span class="hide-menu">Block User</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

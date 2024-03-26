@@ -8,14 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Password = $_POST["password"];
 
     // Prepare and execute SQL statement to check user credentials
-    $stmt = $conn->prepare("SELECT id, FirstName, LastName, email, password FROM users WHERE email=?");
+    $stmt = $conn->prepare("SELECT id, FirstName, LastName, email, password, status FROM users WHERE email=?");
     $stmt->bind_param("s", $Email);
     $stmt->execute();
-    $stmt->bind_result($userId, $userFirstName, $userLastName, $userEmail, $storedHashedPassword);
+    $stmt->bind_result($userId, $userFirstName, $userLastName, $userEmail, $storedHashedPassword, $userStatus);
     $stmt->fetch();
 
-    // Validate user credentials
-    if ($storedHashedPassword !== null && password_verify($Password, $storedHashedPassword)) {
+    // Validate user credentials and check if user is not blocked
+    if ($storedHashedPassword !== null && password_verify($Password, $storedHashedPassword) && $userStatus !== 'blocked') {
         $_SESSION["id"] = $userId;
         $_SESSION["FirstName"] = $userFirstName;
         $_SESSION["LastName"] = $userLastName;
@@ -25,7 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: index.php");
         exit();
     } else {
-        $_SESSION["invalidCredentials"] = true;
+        if ($userStatus === 'blocked') {
+            $_SESSION["blockedUser"] = true;
+        } else {
+            $_SESSION["invalidCredentials"] = true;
+        }
         header("Location: sign-in.php");
         exit();
     }

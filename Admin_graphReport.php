@@ -24,6 +24,8 @@ require_once 'connection.php';
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
+    <link href="dist/css/looks.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -69,9 +71,9 @@ require_once 'connection.php';
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated"
                                 aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="SendEmail.php"><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
-                                <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
+                                                               <li><a class="dropdown-item" href="SendEmail.php"><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
                                 <li><a class="dropdown-item" href="Admin_graphReport.php"><i class="fa fa-power-off me-1 ms-1"></i>Graph report</a></li>
+                                <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -101,14 +103,22 @@ require_once 'connection.php';
                     </div>
                 </div>
             </div>
+
+            <div class="right">
+                <a class="graph-link" href="Admin_CategoryGraph.php">View Category Graph</a>
+            </div>
+
+            
+
             <div class="container-fluid">
                 <div class="row">
-                  <div class="col-md-11">
-                    <canvas id="biddingChart" width="700" height="370"></canvas>
+                  <div class="col-md-12">
+                    <canvas id="biddingChart" width="700" height="330"></canvas>
                    </div>
                 </div>
             </div>
-           
+
+
             <?php
                 // Retrieve data from the database
                 $queryTotalBids = "SELECT COUNT(*) AS total_bids FROM bids";
@@ -154,42 +164,48 @@ require_once 'connection.php';
                 $data[$row['bid_date']] = $row['total_amount'];
             }
             mysqli_close($conn);
+         
         ?>
-
         // JavaScript code to create the chart
         var canvas = document.getElementById('biddingChart');
-        
+var ctx = canvas.getContext('2d');
 
-        var ctx = canvas.getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: <?php echo json_encode(array_keys($data)); ?>,
-                datasets: [{
-                    label: 'Total Bid Amount',
-                    data: <?php echo json_encode(array_values($data)); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode(array_keys($data)); ?>,
+        datasets: [{
+            label: 'Total Bid Amount',
+            data: <?php echo json_encode(array_values($data)); ?>,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Date',
+                    font: {
+                        weight: 'bold' // Make the title bold
+                    }
+                }
             },
-            options: {
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Total Bid Amount'
-                        }
+            y: {
+                title: {
+                    display: true,
+                    text: 'Total Bid Amount',
+                    font: {
+                        weight: 'bold' // Make the title bold
                     }
                 }
             }
-        });
+        }
+    }
+});
+
     </script>
 </body>
 

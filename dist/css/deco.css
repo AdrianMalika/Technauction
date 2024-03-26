@@ -125,40 +125,10 @@
     border-radius: 8px;
 }
 
-.user-info {
-    text-align: center;
-}
 
-.user-name {
-    font-size: 18px;
-    margin-bottom: 5px;
-}
 
-.user-email {
-    color: #777;
-    margin-bottom: 10px;
-}
 
-.user-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%; /* For a circular image, adjust as needed */
-}
 
-.btn-delete {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.btn-delete:hover {
-    background-color: #c82333; /* Darker shade for hover effect */
-}
 .move_price{
     text-align: right;
 }
@@ -203,3 +173,4 @@
   .align-items-center {
     align-items: center;
   }
+

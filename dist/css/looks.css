@@ -117,3 +117,78 @@ label[for="search-box"] {
     justify-content: center;
     display: flex;
  }
+ .graph-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.graph-link:hover {
+    background-color: #0056b3;
+}
+
+.right {
+    text-align: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.user {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 400px; /* Adjust width as needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.user-image {
+    width: 100px; /* Adjust as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Makes the image round */
+    margin-bottom: 10px;
+}
+
+.user-title {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.user-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+

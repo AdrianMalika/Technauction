@@ -1,20 +1,69 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
+// Start session
 session_start();
 
-if (!isset($_SESSION["isloggedin1"])) {
-    header("Location: sign-in.php");
-    exit(); // Added exit() to stop script execution after redirection
-}
-
+// Include necessary files
 require_once 'connection.php';
 
-$query = "SELECT * FROM users";
+// Function to escape special characters to prevent SQL injection
+function escape($conn, $value) {
+    return mysqli_real_escape_string($conn, $value);
+}
+
+// Function to display success message
+function displaySuccessMessage($message) {
+    $_SESSION['success_messages'] = $message;
+}
+
+// Function to display error message
+function displayErrorMessage($message) {
+    $_SESSION['error_messages'] = $message;
+}
+
+// Function to block or unblock user
+function toggleUserStatus($conn, $userId, $status) {
+    $userId = escape($conn, $userId);
+    $status = escape($conn, $status);
+
+    $query = "UPDATE users SET status = '$status' WHERE Id = '$userId'";
+    if (mysqli_query($conn, $query)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// Fetch users from the database
+$query = "SELECT Id, FirstName, LastName, Email, status FROM users";
 $result = $conn->query($query);
 
-?>
+// Check for form submission (block/unblock user)
+if (isset($_GET['action']) && isset($_GET['id'])) {
+    $userId = $_GET['id'];
+    $action = $_GET['action'];
 
+    if ($action === 'block') {
+        if (toggleUserStatus($conn, $userId, 'blocked')) {
+            displaySuccessMessage("User blocked successfully.");
+            // Redirect back to the same page to prevent multiple submissions
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            displayErrorMessage("Failed to block user. Please try again.");
+        }
+    } elseif ($action === 'unblock') {
+        if (toggleUserStatus($conn, $userId, 'active')) {
+            displaySuccessMessage("User unblocked successfully.");
+            // Redirect back to the same page to prevent multiple submissions
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            displayErrorMessage("Failed to unblock user. Please try again.");
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -27,10 +76,11 @@ $result = $conn->query($query);
          Nice admin lite design, Nice admin lite dashboard bootstrap 5 dashboard template">
     <meta name="description" content="Nice Admin Lite is a powerful and clean admin dashboard template, inspired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Manage Users</title>
+    <title>Block Users</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
+    <link href="dist/css/looks.css" rel="stylesheet">
 </head>
 
 <body>
@@ -77,9 +127,9 @@ $result = $conn->query($query);
                                 <img src="assets/images/users/user.png" alt="user" class="rounded-circle" width="31">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="SendEmail.php"><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
-                                <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
+                                                               <li><a class="dropdown-item" href="SendEmail.php"><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
                                 <li><a class="dropdown-item" href="Admin_graphReport.php"><i class="fa fa-power-off me-1 ms-1"></i>Graph report</a></li>
+                                <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -109,53 +159,66 @@ $result = $conn->query($query);
                     </div>
                 </div>
             </div>
+<br>
+            <div class="container">
+                <?php
+                    if (isset($_SESSION['error_messages'])) {
+                        echo '<p class="alert alert-danger">' . $_SESSION['error_messages'] . '</p>';
+                        unset($_SESSION['error_messages']);
+                    }
 
-            <div class="container-fluid">
-        <div class="row">
-            <?php
-            if ($result->num_rows > 0) {
-                $user_details = $result->fetch_all(MYSQLI_ASSOC);
-                foreach ($user_details as $user_detail) {
-                    echo '<div class="col-lg-4 col-10">';
-                    echo '<div class="user-thumb">';
-                    // Display user details here
-                    echo '<div class="user-info">';
-                    echo '<img src="assets/images/users/user.png" class="img-fluid user-image">';
-                    echo '<h5 class="user-name mb-0">' . $user_detail['FirstName'] . ' ' . $user_detail['LastName'] . '</h5>';
-                    echo '<p class="user-email">' . $user_detail['Email'] . '</p>';
-                    // Add the delete button
-                    echo '<a href="delete_user.php?id=' . $user_detail['Id'] . '" class="btn btn-danger btn-sm btn-delete" onclick="return confirmDelete()">Delete</a>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
-                }
-            } else {
-                echo '<div class="col-12"><p>No users available.</p></div>';
-            }
-            $conn->close();
-            ?>
+                    if (isset($_SESSION['success_messages'])) {
+                        echo '<p class="alert alert-success">' . $_SESSION['success_messages'] . '</p>';
+                        unset($_SESSION['success_messages']);
+                    }
+                ?>
+                <div class="row">
+                    <?php if ($result->num_rows > 0) : ?>
+                        <?php while ($user_detail = $result->fetch_assoc()) : ?>
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="user">
+                                    <div class="user-body">
+                                         <img src="assets/images/users/user.png" class="img-fluid user-image">
+                                         <h5 class="user-title"><?= $user_detail['FirstName'] . ' ' . $user_detail['LastName'] ?></h5>
+                                         <p class="user-text"><?= $user_detail['Email'] ?></p>
+                                        <?php if ($user_detail['status'] === 'blocked') : ?>
+                                            <a href="?action=unblock&id=<?= $user_detail['Id'] ?>" class="btn btn-success">Unblock</a>
+                                        <?php else : ?>
+                                            <a href="?action=block&id=<?= $user_detail['Id'] ?>" class="btn btn-danger">Block</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endwhile; ?>
+                    <?php else : ?>
+                        <div class="col-12">
+                            <p>No users available.</p>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="footer text-center">
+                All Rights Reserved by Technauction. Designed and Developed by
+                <a href="#">Technauction</a>.
+            </footer>
         </div>
+
+        <!-- JavaScript Section -->
+        <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/extra-libs/sparkline/sparkline.js"></script>
+        <script src="dist/js/waves.js"></script>
+        <script src="dist/js/sidebarmenu.js"></script>
+        <script src="dist/js/custom.min.js"></script>
     </div>
-
-
-          <footer class="footer text-center">
-    All Rights Reserved by Technauction. Designed and Developed by
-    <a href="#">Technauction</a>.
-</footer>
-
-        </div>
-    </div>
-    <script>
-        function confirmDelete() {
-            return confirm("Are you sure you want to delete this user?");
-        }
-    </script>
-    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/extra-libs/sparkline/sparkline.js"></script>
-    <script src="dist/js/waves.js"></script>
-    <script src="dist/js/sidebarmenu.js"></script>
-    <script src="dist/js/custom.min.js"></script>
 </body>
 
 </html>
+
+<?php
+// Close database connection
+$conn->close();
+?>
+
