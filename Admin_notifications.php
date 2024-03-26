@@ -98,6 +98,7 @@ $stmt->close();
                                 <li><a class="dropdown-item" href="javascript:void(0)"><i class="ti-user me-1 ms-1"></i>My Profile</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="logout.php"><i class="fa fa-power-off me-1 ms-1"></i> Logout</a></li>
+                                <li><a class="dropdown-item" href=""><i class="fa fa-envelope me-1 ms-1"></i>Send Email</a></li>
                             </ul>
                         </li>
                     </ul>
