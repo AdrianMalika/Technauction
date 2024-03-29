@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
             $notificationMessage .= "Condition: {$product['state']}";
 
             // Insert notification into admin notifications table
-            $insertQuery = "INSERT INTO admin_notifications (admin_id, message) VALUES (?, ?)";
+            $insertQuery = "INSERT INTO admin_notifications (admin_id, message, paid) VALUES (?, ?, 'NotPaid')";
             $stmt = $conn->prepare($insertQuery);
             $stmt->bind_param("is", $_SESSION['id'], $notificationMessage);
             $stmt->execute();
@@ -105,7 +105,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
     <link rel="stylesheet" href="css/slick.css"/>
     <link href="css/tooplate-little-fashion.css" rel="stylesheet">
 </head>
+<style>
+.product-thumb {
+    /* Ensure the container has a fixed width */
+    width: 100%;
+    /* Add any additional styling for the container */
+}
 
+.product-image {
+    /* Ensure the image fills its container */
+    width: 100%;
+    height: 550px; /* Set the desired height */
+    object-fit: cover; /* Ensure the whole image is visible without stretching */
+}
+</style>
 <body>
 <section class="preloader">
     <div class="spinner">
@@ -149,11 +162,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
     <section class="product-detail section-padding">
         <div class="row">
             <div class="col-lg-6 col-12">
-                <div class="product-thumb">
-                    <img src="<?php echo $product['image']; ?>"
-                         class="img-fluid product-image" alt="" style="width: 100%; height: 550px;">
+            <div class="product-thumb">
+                <div class="image-wrapper">
+                    <img src="<?php echo $product['image']; ?>" class="img-fluid product-image" alt="">
                 </div>
             </div>
+         </div>
 
             <div class="col-lg-6 col-12">
                 <div class="product-info d-flex">

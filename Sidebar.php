@@ -14,9 +14,9 @@ $hasNewProducts = isset($_SESSION['new_products']) && $_SESSION['new_products'];
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Monitor.php" aria-expanded="false">
-                        <i class="mdi mdi-arrange-bring-forward"></i>
-                        <span class="hide-menu">Monitor</span>
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="process_payment.php" aria-expanded="false">
+                        <i class="mdi mdi-credit-card"></i>
+                        <span class="hide-menu">Make Payment</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
