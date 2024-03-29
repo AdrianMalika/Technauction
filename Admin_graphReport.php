@@ -156,16 +156,16 @@ require_once 'connection.php';
     <script>
         // PHP code to retrieve data
         <?php
-            require_once 'connection.php';
-            $query = "SELECT DATE(created_at) AS bid_date, SUM(bid_amount) AS total_amount FROM bids GROUP BY DATE(created_at)";
-            $result = mysqli_query($conn, $query);
-            $data = [];
-            while ($row = mysqli_fetch_assoc($result)) {
-                $data[$row['bid_date']] = $row['total_amount'];
-            }
-            mysqli_close($conn);
-         
+        require_once 'connection.php';
+        $query = "SELECT DATE(created_at) AS bid_date, SUM(bid_amount) AS total_amount FROM bids GROUP BY DATE(created_at) ORDER BY bid_date";
+        $result = mysqli_query($conn, $query);
+        $data = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[$row['bid_date']] = $row['total_amount'];
+        }
+        mysqli_close($conn);
         ?>
+
         // JavaScript code to create the chart
         var canvas = document.getElementById('biddingChart');
 var ctx = canvas.getContext('2d');

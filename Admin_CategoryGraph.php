@@ -12,7 +12,7 @@ if (!isset($_SESSION["isloggedin1"])) {
 require_once 'connection.php';
 
 // Initialize all categories with count 0
-$categories = ['Accessories', 'Clothing', 'Books', 'Art', 'Watches', 'Appliance', 'Electronics', 'Others'];
+$categories = ['Accessories', 'Books', 'Art', 'Watches', 'Appliance', 'Electronics', 'Others'];
 $categoryData = array_fill_keys($categories, 0);
 
 // Query to get count of products in each category

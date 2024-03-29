@@ -11,6 +11,7 @@ if (!isset($_SESSION["isloggedin"])) {
 require_once 'connection.php';
 
 ?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -19,7 +20,7 @@ require_once 'connection.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <title>Monitor Products</title>
+    <title>Make Payment</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
@@ -34,7 +35,7 @@ require_once 'connection.php';
     </div>
 
     <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
-    <header class="topbar" data-navbarbg="skin6">
+        <header class="topbar" data-navbarbg="skin6">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <div class="navbar-header" data-logobg="skin5">
                     <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
@@ -51,7 +52,7 @@ require_once 'connection.php';
 
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
                     <ul class="navbar-nav float-start me-auto">
-                    <li class="nav-item search-box">
+                        <li class="nav-item search-box">
                             <form class="app-search position-absolute">
                                 <input type="text" class="form-control" placeholder="Search &amp; enter">
                                 <a class="srh-btn">
@@ -79,16 +80,16 @@ require_once 'connection.php';
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Monitor Products</h4>
-                      </div>
-                     <div class="col-7 align-self-center">
+                        <h4 class="page-title">Make Payment</h4>
+                    </div>
+                    <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Monitor Products</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Make Payment</li>
                                 </ol>
                             </nav>
                         </div>
@@ -96,13 +97,18 @@ require_once 'connection.php';
                 </div>
             </div>
 
+            <!-- Add your payment form here -->
+            <form method="post" action="checkout.php">
+        <p>T-shirt</p>
+        <p><strong>US$20.00</strong></p>
+        <button>Pay</button>
+    </form>
 
 
-          <footer class="footer text-center">
+            <footer class="footer text-center">
     All Rights Reserved by Technauction. Designed and Developed by
     <a href="#">Technauction</a>.
 </footer>
-
         </div>
     </div>
 
