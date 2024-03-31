@@ -163,14 +163,12 @@ $stmt->close();
                             </div>
                         </div>
                     </div>
+               
+
                 </div>
             </div>
 
 
-          <footer class="footer text-center">
-    All Rights Reserved by Technauction. Designed and Developed by
-    <a href="#">Technauction</a>.
-</footer>
 
         </div>
     </div>

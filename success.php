@@ -47,7 +47,28 @@ if ($payment_successful) {
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
 </head>
+<style>
+    /* Center the text vertically and horizontally */
+.page-wrapper {
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    height: 207px; /* Ensure the container takes up the full viewport height */
+    text-align: center; /* Center the text */
+}
 
+/* Add margin to the paragraph */
+.page-wrapper p {
+    margin-top: 20px;
+}
+
+/* Style the link */
+.page-wrapper a {
+    color: blue; /* Change link color */
+    text-decoration: underline; /* Add underline */
+}
+
+</style>
 <body>
     <div class="preloader">
         <div class="lds-ripple">
@@ -60,7 +81,6 @@ if ($payment_successful) {
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-5 align-self-center">
-                    <h4 class="page-title">Payment Successful</h4>
                 </div>
                 <div class="col-7 align-self-center">
                     <div class="d-flex align-items-center justify-content-end">
@@ -73,10 +93,16 @@ if ($payment_successful) {
             </div>
         </div>
 
+    </div>
+
+    <div class="page-wrapper">
+    <div>
         <h1>Payment Successful!</h1>
         <p>Thank you for your payment.</p>
         <p>You can expect your order to be processed shortly.</p>
+        <p>Click <a href="process_payment.php">here</a> to go to the home page.</p>
     </div>
+</div>
 
     <script src="assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
