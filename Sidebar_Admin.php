@@ -16,6 +16,13 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="Admin_feedback.php" aria-expanded="false">
+                        <i class="mdi mdi-comment-account"></i> <!-- Material Design Icon for feedback -->
+                            <span class="hide-menu">User Feedback</span>
+                        </a>
+                    </li>
+
+                <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="add_userAdmin.php" aria-expanded="false">
                     <i class="mdi mdi-account-plus"></i>
                      <span class="hide-menu">Add Admin</span>

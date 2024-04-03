@@ -1,6 +1,7 @@
 <?php
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
+
 session_start();
 
 if (!isset($_SESSION["isloggedin1"])) {
@@ -9,6 +10,10 @@ if (!isset($_SESSION["isloggedin1"])) {
 }
 
 require_once 'connection.php';
+
+// Fetch feedback data from the database
+$query = "SELECT * FROM messages";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -18,12 +23,16 @@ require_once 'connection.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5,
+        css3 dashboard, bootstrap 5 dashboard, Nice lite admin bootstrap 5 dashboard template, frontend, responsive bootstrap 5 admin template,
+         Nice admin lite design, Nice admin lite dashboard bootstrap 5 dashboard template">
+    <meta name="description" content="Nice Admin Lite is a powerful and clean admin dashboard template, inspired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
-    <title>Monitor Products</title>
+    <title>User Feedback</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
-
+    <link href="dist/css/looks.css" rel="stylesheet">
 </head>
 
 <body>
@@ -84,7 +93,7 @@ require_once 'connection.php';
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Monitor Products</h4>
+                        <h4 class="page-title">User Feedback</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -93,105 +102,76 @@ require_once 'connection.php';
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Monitor Products</li>
+                                    <li class="breadcrumb-item active" aria-current="page">User Feedback</li>
                                 </ol>
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Display feedback data -->
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <button id="generateBidReport" onclick="generateReport('bid')">Generate Bid Report</button>
-                        <button id="generateItemReport" onclick="generateReport('item')">Generate Item Report</button>
-                        <button id="generateBidderActivityReport" onclick="generateReport('bidder-activity')">Bidder Activity Report</button>
-                        <div id="reportContainer"></div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">User Feedback</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Message</th>
+                                    <th>Time</th> <!-- Added Time column -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Display feedback data
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>" . $row["name"] . "</td>";
+                                        echo "<td>" . $row["email"] . "</td>";
+                                        echo "<td>" . $row["message"] . "</td>";
+                                        echo "<td>" . $row["created_at"] . "</td>"; //Displaying Time 
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No feedback available</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+                                
 
-            <button id="printReport">Print/Save Report</button>
-
+            <!-- Footer Section -->
             <footer class="footer text-center">
                 All Rights Reserved by Technauction. Designed and Developed by
                 <a href="#">Technauction</a>.
             </footer>
         </div>
 
-        <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+        <!-- JavaScript Section -->
         <script src="assets/libs/jquery/dist/jquery.min.js"></script>
         <script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="assets/extra-libs/sparkline/sparkline.js"></script>
         <script src="dist/js/waves.js"></script>
         <script src="dist/js/sidebarmenu.js"></script>
         <script src="dist/js/custom.min.js"></script>
-
-        <script>
-    document.getElementById("generateBidReport").addEventListener("click", function() {
-        generateReport("bid");
-    });
-
-    document.getElementById("generateItemReport").addEventListener("click", function() {
-        generateReport("item");
-    });
-
-    document.getElementById("generateBidderActivityReport").addEventListener("click", function() {
-        generateReport("bidder");
-    });
-
-    document.getElementById("printReport").addEventListener("click", function() {
-    printReport();
-        });
-
-        function printReport() {
-            // Open a new window for printing
-            var printWindow = window.open('', '_blank');
-            // Get the content of the report container
-            var reportContent = document.getElementById("reportContainer").innerHTML;
-            // Include CSS styles
-            var styles = document.head.getElementsByTagName("link");
-            var styleContent = '';
-            for (var i = 0; i < styles.length; i++) {
-                if (styles[i].rel === "stylesheet") {
-                    styleContent += styles[i].outerHTML;
-                }
-            }
-            // Write the content and styles into the new window
-            printWindow.document.write('<html><head><title>Report</title>' + styleContent + '</head><body>' + reportContent + '</body></html>');
-            // Close the document after printing
-            printWindow.document.close();
-            // Print the window
-            printWindow.print();
-        }
-
-    function generateReport(type) {
-        // Show preloader
-        document.querySelector('.preloader').style.display = 'block';
-
-        // Send AJAX request to generate report
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "generate-report.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Parse JSON response
-                    var response = JSON.parse(xhr.responseText);
-                    // Display the generated report
-                    document.getElementById("reportContainer").innerHTML = response.report;
-                } else {
-                    console.error("Failed to generate report: " + xhr.statusText);
-                }
-                // Hide preloader
-                document.querySelector('.preloader').style.display = 'none';
-            }
-        };
-        xhr.send("type=" + type); // Send the type of report to generate
-    }
-</script>
-
-
+    </div>
 </body>
 
 </html>
+
+<?php
+// Close database connection
+$conn->close();
+?>

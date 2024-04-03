@@ -1,7 +1,7 @@
 <?php
 session_start();
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -49,14 +49,29 @@ session_start();
             <img src="images/header/positive-european-woman-has-break-after-work.jpg" class="header-image img-fluid" alt="">
         </header>
 
+
+
         <section class="contact section-padding">
             <div class="container">
                 <div class="row">
 
+                 <!-- Display success message -->
+                    <?php
+                    if (isset($_SESSION['update_success'])) {
+                        echo '<div class="alert alert-success">' . $_SESSION['update_success'] . '</div>';
+                        unset($_SESSION['update_success']);
+                    }
+
+                    // Display error message
+                    if (isset($_SESSION['update_error'])) {
+                        echo '<div class="alert alert-danger">' . $_SESSION['update_error'] . '</div>';
+                        unset($_SESSION['update_error']);
+                    }
+    ?>
                     <div class="col-lg-6 col-12">
                         <h2 class="mb-4">Let's <span>Connect</span></h2>
 
-                        <form class="contact-form me-lg-5 pe-lg-3" role="form">
+                        <form class="contact-form me-lg-5 pe-lg-3" role="form" method="POST" action="send_message.php">
 
                             <div class="form-floating">
                                 <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required>
