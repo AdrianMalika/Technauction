@@ -273,18 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
         });
     });
 </script>
-<script>
-    // Function to reload the page after a certain interval
-    function reloadPage() {
-        location.reload();
-    }
 
-    // Define the interval for page reload (in milliseconds)
-    var reloadInterval = 60000; // 1 minute (adjust as needed)
-
-    // Set up the page reload
-    setTimeout(reloadPage, reloadInterval);
-</script>
 
 <!-- JAVASCRIPT FILES -->
 <script src="js/jquery.min.js"></script>
