@@ -44,11 +44,11 @@ session_start();
                                 <form role="form" action="Login_Admin.php" method="post">
                                     <?php
                                     if (isset($_SESSION['invalidCredentials']) && $_SESSION['invalidCredentials']) {
-                                        echo "<p class='Wrong'>Wrong Password or Email</p>";
+                                        echo "<p class='wrong'>Wrong Password or Email</p>";
                                         unset($_SESSION['invalidCredentials']);
                                     }
                                     if (isset($_SESSION['loginAttempts']) && $_SESSION['loginAttempts']) {
-                                        echo "<p class='Wrong'>Too many attempts try again in 10 minutes</p>";
+                                        echo "<p class='wrong'>Too many attempts try again in 10 minutes</p>";
                                         unset($_SESSION['loginAttempts']);
                                     }
                                     ?> 
@@ -78,6 +78,7 @@ session_start();
             </section>
         </main>
 
+        <?php require_once 'footer.php'; ?>
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>

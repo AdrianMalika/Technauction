@@ -18,6 +18,13 @@ session_start();
         <link href="css/bootstrap-icons.css" rel="stylesheet">
         <link rel="stylesheet" href="css/slick.css"/>
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+        <link href="dist/css/deco.css" rel="stylesheet">
+
+        <style>
+            .Wrong{
+                color: red;
+            }
+        </style>
     </head>
     
     <body>
@@ -43,16 +50,22 @@ session_start();
                                 <form role="form" action="Login.php" method="post">
                                     <?php
                                     if (isset($_SESSION['invalidCredentials']) && $_SESSION['invalidCredentials']) {
-                                        echo '<div class="password">';
+                                        echo '<div class="wrong">';
                                         echo "<p>Wrong Password or Email</p>";
                                         echo '</div>';
                                         unset($_SESSION['invalidCredentials']);
                                     }
                                     if (isset($_SESSION['blockedUser']) && $_SESSION['blockedUser']) {
-                                        echo '<div class="password">';
+                                        echo '<div class="wrong">';
                                         echo "<p>You have been blocked</p>";
                                         echo '</div>';
                                         unset($_SESSION['blockedUser']);
+                                    }
+                                    if (isset($_SESSION['loginWait']) && $_SESSION['loginWait']) {
+                                        echo '<div class="wrong">';
+                                        echo "<p>Please wait for 5 minutes before attempting to login again</p>";
+                                        echo '</div>';
+                                        unset($_SESSION['loginWait']);
                                     }
                                     ?> 
                                     <div class="form-floating mb-4 p-0">

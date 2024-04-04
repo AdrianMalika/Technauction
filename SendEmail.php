@@ -163,7 +163,7 @@ if(isset($_POST["send"])){
                                     <div class="form-group">
                                         <label for="Email_Message" class="form-label">Message</label>
                                         <div class="form-floating mb-3">
-                                            <textarea name="message" id="Email_Message" class="form-control" rows="5" required></textarea>
+                                            <textarea name="message" id="Email_Message" class="form-control" rows="5" required style="height: 158px;"></textarea>
                                         </div>
                                     </div>
                                     <br>

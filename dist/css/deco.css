@@ -220,8 +220,11 @@
 
 button {
     padding: 4px 20px;
-    background-color: #6b3608;
+    background-color: #70421b;
     color: #fff;
     border: none;
     cursor: pointer;
+}
+.password{
+    color: red;
 }
