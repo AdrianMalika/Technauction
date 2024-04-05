@@ -1,10 +1,21 @@
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+session_start();
+
+// Check if the user is not logged in, then redirect to sign-in page
+require_once 'Connection.php';
+require 'phpmailer/src/Exception.php';
+require 'phpmailer/src/PHPMailer.php';
+require 'phpmailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 // Check if the payment was successful (you may need to adjust this condition based on your payment processing mechanism)
 $payment_successful = true; // For demonstration purposes, assuming payment is always successful
 
 if ($payment_successful) {
-    require_once 'Connection.php'; // Include database connection
-    
     // Get the notification ID from the URL parameter
     if (isset($_GET["notification_id"]) && is_numeric($_GET["notification_id"])) {
         $notification_id = $_GET["notification_id"];
@@ -28,11 +39,56 @@ if ($payment_successful) {
         // Handle case where notification ID is not provided or invalid
         die('Error: Notification ID is missing or invalid');
     }
+    
+    // Fetch the user's email from the users table
+    $user_id = $_SESSION['id']; // Assuming user ID is stored in the session
+    $query = "SELECT Email FROM users WHERE Id = ?";
+    $stmt = $conn->prepare($query);
+    if ($stmt) {
+        $stmt->bind_param('i', $user_id);
+        if ($stmt->execute()) {
+            $stmt->bind_result($user_email);
+            $stmt->fetch();
+            $stmt->close();
+        } else {
+            // Handle execution error
+            die('Error: Failed to execute the query');
+        }
+    } else {
+        // Handle preparation error
+        die('Error: Failed to prepare the statement');
+    }
+    
+    // Send email notification to the user
+    try {
+        $mail = new PHPMailer(true);
+        
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'adrianmalika61@gmail.com';
+        $mail->Password = 'cavh tpyg sxcc eegt';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+
+        $mail->setFrom('adrianmalika61@gmail.com');
+        $mail->addAddress($user_email);
+        $mail->isHTML(true);
+        $mail->Subject = 'Payment Successful';
+        $mail->Body = 'Thank you for your payment. Your order will be processed shortly.';
+
+        $mail->send();
+        
+   
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
 } else {
     // Handle case where payment is not successful
     die('Error: Payment was not successful');
 }
 ?>
+
 
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
