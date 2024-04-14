@@ -47,7 +47,7 @@ if ($storedHashedPassword !== null && password_verify($Password, $storedHashedPa
     $_SESSION['loginAttempts1'] = 0;
     $_SESSION['lastLoginAttempt1'] = 0;
 
-    header("Location: Admin_index.php");
+    header("Location: Admin_notifications.php");
     exit();
 } else {
     $_SESSION["invalidCredentials1"] = true;

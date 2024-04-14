@@ -8,6 +8,79 @@ if (!isset($_SESSION["isloggedin"]) && !isset($_SESSION["isloggedin1"])) {
     exit();
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['product_id'])) {
+    // Get the product ID from the POST data
+    $product_id = $_POST['product_id'];
+
+    // Fetch the maximum bid amount for the product
+    $query = "SELECT MAX(bid_amount) AS max_bid FROM bids WHERE product_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $max_bid = $row['max_bid'];
+
+        // Delete the bid for the product with the maximum bid amount for the logged-in user
+        $delete_query = "DELETE FROM bids WHERE product_id = ? AND bid_amount = ?";
+        $delete_stmt = $conn->prepare($delete_query);
+        $delete_stmt->bind_param("id", $product_id, $max_bid);
+        $delete_stmt->execute();
+
+        // Get the new maximum bid amount after canceling the bid
+        $new_query = "SELECT MAX(bid_amount) AS new_max_bid FROM bids WHERE product_id = ?";
+        $new_stmt = $conn->prepare($new_query);
+        $new_stmt->bind_param("i", $product_id);
+        $new_stmt->execute();
+        $new_result = $new_stmt->get_result();
+        $new_row = $new_result->fetch_assoc();
+        $new_max_bid = $new_row['new_max_bid'];
+
+        // Update the price of the product with the new maximum bid amount or starting price if no bids
+        if ($new_max_bid !== null) {
+            $current_bid_price = $new_max_bid;
+        } else {
+            // Fetch the starting price of the product
+            $starting_price_query = "SELECT starting_price FROM products WHERE Id = ?";
+            $starting_price_stmt = $conn->prepare($starting_price_query);
+            $starting_price_stmt->bind_param("i", $product_id);
+            $starting_price_stmt->execute();
+            $starting_price_result = $starting_price_stmt->get_result();
+            $starting_price_row = $starting_price_result->fetch_assoc();
+            $current_bid_price = $starting_price_row['starting_price'];
+        }
+
+        // Update the price of the product
+        $update_query = "UPDATE products SET price = ? WHERE Id = ?";
+        $update_stmt = $conn->prepare($update_query);
+        $update_stmt->bind_param("di", $current_bid_price, $product_id);
+        $update_stmt->execute();
+
+        // Redirect back to the product details page
+        header("Location: product-detail.php?product_id=$product_id");
+        exit();
+    }
+}
+
+function getCurrentPrice($product_id, $conn) {
+    // Fetch the current price from the products table
+    $query = "SELECT price FROM products WHERE Id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['price'];
+    } else {
+        return 0; // Default price if product not found
+    }
+}
+
+// Remaining code for fetching product details
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
     // Use prepared statement to prevent SQL injection
     $product_id = $_GET['product_id'];
@@ -69,9 +142,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
             $notificationMessage .= "Condition: {$product['state']}";
 
             // Insert notification into admin notifications table
-            $insertQuery = "INSERT INTO admin_notifications (admin_id, message, paid) VALUES (?, ?, 'NotPaid')";
+            $insertQuery = "INSERT INTO admin_notifications (user_id, message, paid) VALUES (?, ?, 'NotPaid')"; // Changed admin_id to user_id
             $stmt = $conn->prepare($insertQuery);
-            $stmt->bind_param("is", $_SESSION['id'], $notificationMessage);
+            $stmt->bind_param("is", $_SESSION['id'], $notificationMessage); // Changed $_SESSION['id'] to user_id
             $stmt->execute();
             $stmt->close();
         }
@@ -86,6 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
     exit();
 }
 ?>
+
 
 <!doctype html>
 <html lang="en">
@@ -160,67 +234,81 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
 <div class="container mt-3">
     <!-- Product Detail Section -->
     <section class="product-detail section-padding">
-        <div class="row">
-            <div class="col-lg-6 col-12">
+    <div class="row">
+        <div class="col-lg-6 col-12">
             <div class="product-thumb">
                 <div class="image-wrapper">
                     <img src="<?php echo $product['image']; ?>" class="img-fluid product-image" alt="">
                 </div>
             </div>
-         </div>
+        </div>
+
+        <div class="col-lg-6 col-12">
+        <div class="product-info d-flex">
+                <div>
+                    <h2 class="product-title mb-0"><?php echo $product['Title']; ?></h2>
+                    <p class="lead mb-2">Condition: <?php echo $product['state']; ?></p>
+
+                    <?php if (!empty($product['highest_bidder'])) : ?>
+                        <p class="lead mb-2">Highest Bidder: <?php echo $product['highest_bidder']; ?></p>
+                    <?php endif; ?>
+
+                </div>
+                <p class="product-price text-muted ms-auto mt-auto mb-5">Current Price: MK<?php echo getCurrentPrice($product_id, $conn); ?></p>
+            </div>
+
+            <div class="product-description">
+                <strong class="d-block mt-4 mb-2">Description</strong>
+                <p class="lead mb-5"><?php echo $product['description']; ?></p>
+            </div>
 
             <div class="col-lg-6 col-12">
-                <div class="product-info d-flex">
-                    <div>
-                        <h2 class="product-title mb-0"><?php echo $product['Title']; ?></h2>
-                        <p class="lead mb-2">Condition: <?php echo $product['state']; ?></p>
-
-                        <?php if (!empty($product['highest_bidder'])) : ?>
-                            <p class="lead mb-2">Highest Bidder: <?php echo $product['highest_bidder']; ?></p>
-                        <?php endif; ?>
-
-                    </div>
-                    <p class="product-price text-muted ms-auto mt-auto mb-5">Current Price: MK<?php echo $product['price']; ?></p>
-                </div>
-
-                <div class="product-description">
-                    <strong class="d-block mt-4 mb-2">Description</strong>
-                    <p class="lead mb-5"><?php echo $product['description']; ?></p>
-                </div>
-
-                <div class="col-lg-6 col-12">
                 <!-- Display the countdown timer -->
                 <div class="product-description">
-                    <strong  class="d-block mt-4 mb-2">Remaining Time:</strong>
-                    <div id="countdown"></div>
+                    <strong class="d-block mt-4 mb-2">Remaining Time:   <?php if (!$auctionEnded) : ?></strong>
+                    <div id="countdown">
+                  
+                    </div>
                 </div>
-
-                <?php if (!$auctionEnded) : ?>
+<br>
+               
                     <div class="product-cart-thumb row">
-                    <div class="col-lg-6 col-12">
-                        <div class="form-floating p-0">
-                            <input type="text" name="Bid_amount" id="Bid_amount" class="form-control"
-                                   placeholder="Amount" required>
-                            <label for="Bid_amount">Amount</label>
+                        <div class="col-lg-6 col-12">
+                            <div class="form-floating p-0">
+                                <input type="text" name="Bid_amount" id="Bid_amount" class="form-control"
+                                       placeholder="Amount" required>
+                                <label for="Bid_amount">Bid Amount</label>
+                            </div>
+                            <!-- Include the product_id in the bid form -->
+                            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                         </div>
-                        <!-- Include the product_id in the bid form -->
-                        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-                    </div>
 
-                    <div class="col-lg-6 col-12 mt-4 mt-lg-0">
-                        <!-- Add data attributes to store product_id and current bid -->
-                        <button type="submit" class="btn custom-btn cart-btn place-bid-btn"
-                                data-bs-toggle="modal" data-bs-target="#cart-modal"
-                                data-product-id="<?php echo $product['product_id']; ?>"
-                                data-current-bid="<?php echo $product['price']; ?>">
-                            Place Bid
-                        </button>
+                        <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                            <!-- Add data attributes to store product_id and current bid -->
+                            <button type="submit" class="btn custom-btn cart-btn place-bid-btn"
+                                    data-bs-toggle="modal" data-bs-target="#cart-modal"
+                                    data-product-id="<?php echo $product['product_id']; ?>"
+                                    data-current-bid="<?php echo $product['price']; ?>">
+                                Place Bid
+                            </button>
+                        </div>
+
+                        <!-- Display the cancel button if the logged-in user is the highest bidder -->
+                        <?php if ($product['highest_bidder_id'] == $_SESSION['id']) : ?>
+                            <div class="col-lg-6 col-12 mt-4">
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                    <button type="submit" class="btn btn-danger">Cancel Bid</button>
+                                </form>
+                            </div>
+                        <?php endif; ?>
                     </div>
-                </div>
                 <?php endif; ?>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 </div>
 </main>
 

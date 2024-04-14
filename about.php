@@ -114,7 +114,7 @@ session_start();
                     <div class="row">
 
                         <div class="col-lg-9 mx-auto col-11">
-                            <h2 class="text-center">Customer love, <br> <span>Little</span> Fashion</h2>
+                            <h2 class="text-center">Customer love, <br> <span>Techn</span>auction</h2>
 
                             <div class="slick-testimonial">
                                 <div class="slick-testimonial-caption">

@@ -76,7 +76,7 @@ $result = $conn->query($query);
     <!-- Product section -->
     <section class="products section-padding">
     <div class="container">
-        <div class="row">
+        <div class="row" id="product-container">
             <?php
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -122,6 +122,33 @@ $result = $conn->query($query);
     <script src="js/jQuery.headroom.js"></script>
     <script src="js/slick.min.js"></script>
     <script src="js/custom.js"></script>
+
+    <!-- Add this JavaScript code at the end of your HTML body -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get references to the search input and the product container
+            var searchBox = document.getElementById('search-box');
+            var productContainer = document.getElementById('product-container');
+
+            // Add event listener to the search input
+            searchBox.addEventListener('input', function () {
+                var searchTerm = searchBox.value.toLowerCase(); // Convert search query to lowercase for case-insensitive comparison
+
+                // Loop through each product and check if it matches the search query
+                Array.from(productContainer.children).forEach(function (product) {
+                    var productName = product.querySelector('.product-title').textContent.toLowerCase(); // Get product name and convert to lowercase
+                    var productDescription = product.querySelector('.product-p').textContent.toLowerCase(); // Get product description and convert to lowercase
+
+                    // If the product name or description contains the search query, display the product; otherwise, hide it
+                    if (productName.includes(searchTerm) || productDescription.includes(searchTerm)) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>

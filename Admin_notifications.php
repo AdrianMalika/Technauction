@@ -130,35 +130,40 @@ $stmt->close();
 
             <!-- Notification list -->
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Notification</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($notifications as $notification) : ?>
                                             <tr>
-                                                <th>Notification</th>
-                                                <th>Date</th>
+                                                <td><?php echo nl2br($notification['message']); ?></td>
+                                                <td><?php echo $notification['created_at']; ?></td>
+                                                <td><?php echo isset($notification['Paid']) ? $notification['Paid'] : ''; ?></td>
+                                                <td>
+                                                    <!-- Add a button to send email -->
+                                                    <a href="SendEmail.php?notification_id=<?php echo isset($notification['id']) ? $notification['id'] : ''; ?>" class="btn btn-primary">Send Email</a>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($notifications as $notification) : ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php echo nl2br($notification['message']); ?>
-                                                    </td>
-                                                    <td><?php echo $notification['created_at']; ?></td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
           <footer class="footer text-center">

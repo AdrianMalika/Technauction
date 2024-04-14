@@ -9,12 +9,12 @@ if (!isset($_SESSION["isloggedin"])) {
 
 require_once 'Connection.php';
 
-// Get the logged-in admin's ID
+// Get the logged-in user's ID
 $user_id = $_SESSION['id'];
 
-// Fetch notifications for the logged-in admin
+// Fetch notifications for the logged-in user
 $notifications = array();
-$query = "SELECT * FROM admin_notifications WHERE admin_id = ? AND admin_id IS NOT NULL ORDER BY id DESC";
+$query = "SELECT * FROM admin_notifications WHERE user_id = ? ORDER BY id DESC"; // Modified query to use user_id
 $stmt = $conn->prepare($query);
 if (!$stmt) {
     die('Error in preparing statement: ' . $conn->error);

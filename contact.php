@@ -120,7 +120,7 @@ session_start();
                             <div class="col-6 border-top border-end contact-info">
                                 <h6 class="mb-3">Our Address</h6>
 
-                                <p class="text-muted">123 Tech Street, Silicon Valley, USA</p>
+                                <p class="text-muted">Vi ctoria avenue Street, Blantyre,Malawi</p>
                             </div>
 
                             <div class="col-6 border-top contact-info">
