@@ -156,7 +156,7 @@ if ($payment_successful) {
         <h1>Payment Successful!</h1>
         <p>Thank you for your payment.</p>
         <p>You can expect your order to be processed shortly.</p>
-        <p>Click <a href="process_payment.php">here</a> to go to the home page.</p>
+        <p>Click <a href="process_payment.php">HERE</a> to go to the home page.</p>
     </div>
 </div>
 

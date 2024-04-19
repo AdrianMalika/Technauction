@@ -19,7 +19,7 @@ require_once 'connection.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <title>Monitor Products</title>
+    <title>Reports</title>
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
     <link href="dist/css/style.min.css" rel="stylesheet">
     <link href="dist/css/deco.css" rel="stylesheet">
@@ -84,7 +84,7 @@ require_once 'connection.php';
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-5 align-self-center">
-                        <h4 class="page-title">Monitor Products</h4>
+                        <h4 class="page-title">System Reports</h4>
                     </div>
                     <div class="col-7 align-self-center">
                         <div class="d-flex align-items-center justify-content-end">
@@ -93,7 +93,7 @@ require_once 'connection.php';
                                     <li class="breadcrumb-item">
                                         <a href="#">Home</a>
                                     </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Monitor Products</li>
+                                    <li class="breadcrumb-item active" aria-current="page">System Reports</li>
                                 </ol>
                             </nav>
                         </div>
@@ -193,5 +193,6 @@ require_once 'connection.php';
 
 
 </body>
+
 
 </html>
