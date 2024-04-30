@@ -31,7 +31,7 @@
                             </li>
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="faq.php">FAQs</a>
+                                <a class="nav-link" href="faq.php">Help Guide</a>
                             </li>
 
                             <li class="nav-item">
@@ -42,9 +42,10 @@
                         <div class="d-none d-lg-block">
                         <?php 
                         if (isset($_SESSION["id"]) || isset($_SESSION["user_id"])) {
-                            echo '<a href="pages-profile.php" class="bi-person custom-icon me-3"></a>';
+                            echo '<a href="pages-profile.php" class="bi-person custom-icon me-2"style="font-size: 18px;"> Profile</a>';
                         } else {
-                            echo '<a href="sign-in.php" class="bi-person custom-icon me-3"></a>';
+                            echo '<a href="sign-in.php" class="bi-person custom-icon me-2" style="font-size: 18px;">Login</a>';
+
                         }
                         ?>
 

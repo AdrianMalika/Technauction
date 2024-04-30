@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET['id'])) {
         $stmt->bind_param("i", $productId);
 
         if ($stmt->execute()) {
-            $_SESSION['success_messages'] = "Product successfully deleted.";
+            $_SESSION['success_messages1'] = "Product successfully deleted.";
         } else {
-            $_SESSION['error_messages'] = "Error deleting product: " . $stmt->error;
+            $_SESSION['error_messages1'] = "Error deleting product: " . $stmt->error;
         }
 
         $stmt->close();

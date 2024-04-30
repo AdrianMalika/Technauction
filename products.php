@@ -98,7 +98,7 @@ $result = $conn->query($query);
                     echo '<p class="product-p">' . $row['description'] . '</p>';
                     echo '</div>';
                     echo '<div class="product-details">';
-                    echo '<a href="product-detail.php?product_id=' . $row['Id'] . '" class="product-title-link">Place Bid</a>';
+                    echo '<a href="product-detail.php?product_id=' . $row['Id'] . '" class="product-title-link" style="color: white;">Place Bid</a>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

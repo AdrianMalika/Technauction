@@ -108,14 +108,27 @@ require_once 'connection.php';
             </div>
 
             <div class="container-fluid">
+                <?php
+                  if (isset($_SESSION['success_messages1'])) {
+                    echo '<div class="col-12">';
+                    echo '<div class="alert alert-success">' . $_SESSION['success_messages1'] . '</div>';
+                    echo '</div>';
+                    unset($_SESSION['success_messages1']);
+                }
+
+                if (isset($_SESSION['error_messages1'])) {
+                    echo '<div class="col-12">';
+                    echo '<div class="alert alert-danger">' . $_SESSION['error_messages1'] . '</div>';
+                    echo '</div>';
+                    unset($_SESSION['error_messages1']);
+                }
+                ?>
                 <div class="row">
                     <?php
-                    $query = "SELECT p.id, p.image, p.Title, p.price,p.starting_price, p.description, p.state, p.category, u.Email AS user_email, CONCAT(u.FirstName, ' ', u.LastName) AS user_name
-                    FROM products p
-                    JOIN users u ON p.owner_id = u.Id
-                    ORDER BY p.id DESC";
-                
-
+                                $query = "SELECT p.id, p.image, p.Title, p.price,p.starting_price, p.description, p.state, p.category, u.Email AS user_email, CONCAT(u.FirstName, ' ', u.LastName) AS user_name
+                                FROM products p
+                                JOIN users u ON p.owner_id = u.Id
+                                ORDER BY p.id DESC";
 
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {
@@ -161,6 +174,7 @@ require_once 'connection.php';
                     ?>
                 </div>
             </div>
+
 
 
           <footer class="footer text-center">

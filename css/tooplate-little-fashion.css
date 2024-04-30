@@ -923,7 +923,7 @@ button:focus:not(:focus-visible) {
 }
 
 .product-title-link {
-  color: var(--dark-color);
+  color: var(--grey-color);
 }
 
 .product-additional-link {

@@ -265,11 +265,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
             <div class="col-lg-6 col-12">
                 <!-- Display the countdown timer -->
                 <div class="product-description">
-                    <strong class="d-block mt-4 mb-2">Remaining Time:   <?php if (!$auctionEnded) : ?></strong>
+                    <strong class="d-block mt-4 mb-2">Remaining Time: </strong>
                     <div id="countdown">
                   
                     </div>
                 </div>
+                <?php if (!$auctionEnded) : ?>
 <br>
                
                     <div class="product-cart-thumb row">
