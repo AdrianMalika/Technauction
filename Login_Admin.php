@@ -7,22 +7,7 @@ $Email = $_POST["User_Email"];
 $Password = $_POST["password"];
 
 // Check for login attempts and waiting period
-if (isset($_SESSION['loginAttempts1']) && isset($_SESSION['lastLoginAttempt1'])) {
-    $maxLoginAttempts = 3;
-    $waitingPeriod = 2; // 2 seconds for testing, should be 10 minutes in production
 
-    $lastLoginAttempt = $_SESSION['lastLoginAttempt1'];
-    $currentTime = time();
-
-    if (($currentTime - $lastLoginAttempt) < $waitingPeriod) {
-        $_SESSION["loginWait1"] = true;
-        header("Location: signin_admin.php");
-        exit();
-    } else {
-        $_SESSION['loginAttempts1'] = 0;
-        $_SESSION['lastLoginAttempt1'] = 3; // Reset last login attempt
-    }
-}
 
 // Prepare and execute SQL statement to check admin credentials
 $stmt = $conn->prepare("SELECT ID, password FROM admin WHERE Email=?");

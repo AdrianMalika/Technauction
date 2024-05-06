@@ -61,12 +61,6 @@ session_start();
                                         echo '</div>';
                                         unset($_SESSION['blockedUser']);
                                     }
-                                    if (isset($_SESSION['loginWait']) && $_SESSION['loginWait']) {
-                                        echo '<div class="wrong">';
-                                        echo "<p>Please wait for 5 minutes before attempting to login again</p>";
-                                        echo '</div>';
-                                        unset($_SESSION['loginWait']);
-                                    }
                                     ?> 
                                     <div class="form-floating mb-4 p-0">
                                         <input type="email" name="User_Email" id="User_Email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required>

@@ -247,43 +247,38 @@ session_start();
 
         <!-- TEAM MEMBER MODAL -->
         <div class="modal fade" id="marie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content border-0">
-                    <div class="modal-header flex-column">
-                        <h3 class="modal-title" id="exampleModalLabel">Marie Sam</h3>
-
-                        <h6 class="text-muted">Founder & CEO</h6>
-
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+     <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0">
+            <div class="modal-header flex-column">
+                <h3 class="modal-title" id="exampleModalLabel">Marie Sam</h3>
+                <h6 class="text-muted">Founder & CEO</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="mb-4">Over three years in business, Marie Sam, the Founder & CEO of the organization.</h5>
+                <div class="row mb-4">
+                    <div class="col-lg-6 col-12">
+                        <p>Marie Sam is a seasoned entrepreneur with a proven track record of success in the business world. 
+                            She is known for her innovative thinking and ability to navigate complex challenges with ease. 
+                            As the Founder & CEO of the organization, Marie has led the company to achieve significant milestones and establish a strong presence in the market.</p>
                     </div>
-
-                    <div class="modal-body">
-                        <h5 class="mb-4">Over three years in business had the chance to work on variety of projects, with companies</h5>
-
-                        <div class="row mb-4">
-                            <div class="col-lg-6 col-12">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-
-                            <div class="col-lg-6 col-12">
-                                <p>Incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse commodo viverra.</p>
-                            </div>
-                        </div>
-
-                        <ul class="social-icon">
-                            <li class="me-3"><strong>Where to find?</strong></li>
-
-                            <li><a href="#" class="social-icon-link bi-twitter"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-envelope"></a></li>
-                        </ul>
+                    <div class="col-lg-6 col-12">
+                        <p>With her hands-on approach and strategic mindset, 
+                            Marie has built a dedicated team that shares her passion for excellence. Under her leadership,
+                             the organization has experienced exponential growth and garnered recognition for its commitment to quality and customer satisfaction. </p>
                     </div>
                 </div>
-
+                <ul class="social-icon">
+                    <li class="me-3"><strong>Where to find?</strong></li>
+                    <li><a href="#" class="social-icon-link bi-twitter"></a></li>
+                    <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
+                    <li><a href="#" class="social-icon-link bi-envelope"></a></li>
+                </ul>
             </div>
         </div>
+    </div>
+</div>
+
 
         <?php require_once 'footer.php'; ?>
         <!-- JAVASCRIPT FILES -->

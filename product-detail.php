@@ -119,7 +119,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
         if ($auctionEnded) {
             // Fetch highest bidder's email
             $highestBidderEmail = '';
-            // Corrected variable name and added a check to ensure the key exists
             if (isset($product['highest_bidder_id'])) {
                 $highestBidderId = $product['highest_bidder_id'];
                 $stmt = $conn->prepare("SELECT Email FROM users WHERE id = ?");
@@ -134,7 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
 
             // Construct notification message
             $notificationMessage = "Auction for product '{$product['Title']}' has ended.\n";
-            // Changed $highestBidder to $product['highest_bidder']
             $notificationMessage .= "Highest Bidder: {$product['highest_bidder']}\n";
             $notificationMessage .= "Bidder Email: {$highestBidderEmail}\n";
             $notificationMessage .= "Bid Amount: MK{$product['price']}\n";
@@ -142,9 +140,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
             $notificationMessage .= "Condition: {$product['state']}";
 
             // Insert notification into admin notifications table
-            $insertQuery = "INSERT INTO admin_notifications (user_id, message, paid) VALUES (?, ?, 'NotPaid')"; // Changed admin_id to user_id
+            $insertQuery = "INSERT INTO admin_notifications (user_id, message, paid) VALUES (?, ?, 'NotPaid')"; 
             $stmt = $conn->prepare($insertQuery);
-            $stmt->bind_param("is", $_SESSION['id'], $notificationMessage); // Changed $_SESSION['id'] to user_id
+            $stmt->bind_param("is", $highestBidderId, $notificationMessage); // Changed $_SESSION['id'] to highestBidderId
             $stmt->execute();
             $stmt->close();
         }
@@ -158,6 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['product_id'])) {
     header("Location: products.php");
     exit();
 }
+?>
 ?>
 
 

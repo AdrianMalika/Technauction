@@ -47,10 +47,7 @@ session_start();
                                         echo "<p class='wrong'>Wrong Password or Email</p>";
                                         unset($_SESSION['invalidCredentials']);
                                     }
-                                    if (isset($_SESSION['loginAttempts']) && $_SESSION['loginAttempts']) {
-                                        echo "<p class='wrong'>Too many attempts try again in 10 minutes</p>";
-                                        unset($_SESSION['loginAttempts']);
-                                    }
+                                 
                                     ?> 
                                     <div class="form-floating mb-4 p-0">
                                         <input type="email" name="User_Email" id="User_Email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required>

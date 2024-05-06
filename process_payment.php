@@ -38,6 +38,7 @@ if ($result->num_rows > 0) {
 
 $stmt->close();
 ?>
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -126,50 +127,42 @@ $stmt->close();
 
         <!-- Notification list -->
         <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product Won</th>
-                                                    <th>Date Won</th>
-                                                    <th>Status(Paid/ Not Paid)</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php foreach ($notifications as $notification) : ?>
-                                                <tr>
-                                                    <td><?php echo nl2br($notification['message']); ?></td>
-                                                    <td><?php echo $notification['created_at']; ?></td>
-                                                    <td><?php echo isset($notification['Paid']) ? $notification['Paid'] : ''; ?></td> <!-- Check if 'Paid' is set -->
-                                                    <td>
-                                                        <?php if (isset($notification['Paid']) && $notification['Paid'] != 'Paid') : ?> <!-- Check if 'Paid' is set -->
-                                                            <form method="post" action="checkout.php">
-                                                                <input type="hidden" name="notification_id" value="<?php echo $notification['id']; ?>">
-                                                                <button type="submit">Pay</button>
-                                                            </form>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product Won</th>
+                                        <th>Date Won</th>
+                                        <th>Status(Paid/ Not Paid)</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($notifications as $notification) : ?>
+                                        <tr>
+                                            <td><?php echo nl2br($notification['message']); ?></td>
+                                            <td><?php echo $notification['created_at']; ?></td>
+                                            <td><?php echo isset($notification['Paid']) ? $notification['Paid'] : ''; ?></td>
+                                            <td>
+                                                <?php if (isset($notification['Paid']) && $notification['Paid'] != 'Paid') : ?>
+                                                    <form method="post" action="checkout.php">
+                                                        <input type="hidden" name="notification_id" value="<?php echo $notification['id']; ?>">
+                                                        <button type="submit">Pay</button>
+                                                    </form>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-               
-
                 </div>
             </div>
-
-
-
         </div>
     </div>
 
