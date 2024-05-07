@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit();
     }
 
-    // Set the initial price to be the same as the starting price
+    // Set tuhe initial price to be the same as the starting price
     $price = $startingPrice;
 
     // Check if the image file was uploaded successfully
